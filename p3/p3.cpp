@@ -14,9 +14,10 @@ void output_numbers(const vector<double>& numbers, const size_t& count);
 
 void svg_begin(double width, double height);
 void svg_end();
-void show_histogram_svg(const vector<size_t>& bins, const size_t &bin_count);
+void show_histogram_svg(const vector<size_t>& bins, const size_t& bin_count, const vector<string>& colors);
 void svg_text(double left, double baseline, string text);
 void svg_rect(double x, double y, double width, double height, string stroke = "black", string fill = "black");
+vector<string> input_colors(size_t count);
 
 int main()
 {
@@ -29,8 +30,9 @@ int main()
     size_t bin_count;
     cerr << "Enter bin count: ";
     cin >> bin_count;
+    vector<string> colors = input_colors(bin_count);
     vector<size_t> bins = make_histogram(numbers, bin_count);
-    show_histogram_svg(bins, bin_count);
+    show_histogram_svg(bins, bin_count, colors);
 }
 
 void svg_begin(double width, double height) {
@@ -46,9 +48,9 @@ void svg_end() {
     cout << "</svg>\n";
 }
 
-void show_histogram_svg(const vector<size_t>& bins, const size_t &bin_count) {
+void show_histogram_svg(const vector<size_t>& bins, const size_t &bin_count, const vector<string> &colors) {
     const auto IMAGE_WIDTH = 810;
-    const auto IMAGE_HEIGHT = 300;
+    const auto IMAGE_HEIGHT = 600;
     const auto TEXT_LEFT = 20;
     const auto TEXT_BASELINE = 20;
     const auto TEXT_WIDTH = 50;
@@ -65,11 +67,13 @@ void show_histogram_svg(const vector<size_t>& bins, const size_t &bin_count) {
     if (max_count > MAX_ASTERISK)
         scaling_factor = MAX_ASTERISK / static_cast<double>(max_count);
     size_t scaled_bin;
-    for (size_t bin : bins) {
+    size_t bin;
+    for (int i = 0; i < bin_count; i++) {
+        bin = bins[i];
         scaled_bin = static_cast<size_t>(scaling_factor * bin);
         const double bin_width = BLOCK_WIDTH * scaled_bin;
         svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
-        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, "red", "#ffeeee");
+        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, colors[i], colors[i]);
         top += BIN_HEIGHT;
     }
     svg_end();
@@ -80,6 +84,22 @@ void svg_text(double left, double baseline, string text) {
 
 void svg_rect(double x, double y, double width, double height,string stroke, string fill) {
     cout << "<rect x=' " << x << "' y=' " << y << "' width=' " << width << "' height=' " << height << "' stroke=' " << stroke << "' fill='" << fill << "'/>" << '\n';
+}
+
+vector<string> input_colors(size_t count) {
+    vector<string> result(count);
+    string color;
+    cin.ignore();
+    for (size_t i = 0; i < count; i++) {
+        cerr << "Enter color: ";
+        getline(cin, color);
+        while (color[0] != '#' && color.find(' ') != -1) {
+            cerr << "Non-existent color. Enter other color: ";
+            getline(cin, color);
+        }
+        result[i] = color;
+    }
+    return result;
 }
 
 vector<double> input_numbers(size_t count) {
