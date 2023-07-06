@@ -18,12 +18,18 @@
     <ClCompile Include="p3.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="histogram.cpp">
+    <ClCompile Include="build_histogram.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="show_svg_histogram.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="histogram.h">
+    <ClInclude Include="build_histogram.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="show_svg_histogram.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
