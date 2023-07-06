@@ -5,6 +5,22 @@ VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "p3", "p3\p3.vcxproj", "{66B2508D-9057-471F-808F-659214FA957F}"
 EndProject
+Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "test", "..\lab03-test\x64\Debug\test.exe", "{ACADBAFC-83D4-49FB-9C03-029E420BD1C6}"
+	ProjectSection(DebuggerProjectSystem) = preProject
+		PortSupplier = 00000000-0000-0000-0000-000000000000
+		Executable = C:\Users\Professional\source\repos\lab03-test\x64\Debug\test.exe
+		RemoteMachine = USER-PC
+		StartingDirectory = C:\Users\Professional\source\repos\lab03-test\x64\Debug
+		Environment = По умолчанию
+		LaunchingEngine = 00000000-0000-0000-0000-000000000000
+		UseLegacyDebugEngines = No
+		LaunchSQLEngine = No
+		AttachLaunchAction = No
+		IORedirection = Auto
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lab03-test", "lab03-test\lab03-test\lab03-test.vcxproj", "{A914D944-6FD7-4E46-95FF-01D00EA3B0E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +37,18 @@ Global
 		{66B2508D-9057-471F-808F-659214FA957F}.Release|x64.Build.0 = Release|x64
 		{66B2508D-9057-471F-808F-659214FA957F}.Release|x86.ActiveCfg = Release|Win32
 		{66B2508D-9057-471F-808F-659214FA957F}.Release|x86.Build.0 = Release|Win32
+		{ACADBAFC-83D4-49FB-9C03-029E420BD1C6}.Debug|x64.ActiveCfg = Release|x64
+		{ACADBAFC-83D4-49FB-9C03-029E420BD1C6}.Debug|x86.ActiveCfg = Release|x64
+		{ACADBAFC-83D4-49FB-9C03-029E420BD1C6}.Release|x64.ActiveCfg = Release|x64
+		{ACADBAFC-83D4-49FB-9C03-029E420BD1C6}.Release|x86.ActiveCfg = Release|x64
+		{A914D944-6FD7-4E46-95FF-01D00EA3B0E2}.Debug|x64.ActiveCfg = Debug|x64
+		{A914D944-6FD7-4E46-95FF-01D00EA3B0E2}.Debug|x64.Build.0 = Debug|x64
+		{A914D944-6FD7-4E46-95FF-01D00EA3B0E2}.Debug|x86.ActiveCfg = Debug|Win32
+		{A914D944-6FD7-4E46-95FF-01D00EA3B0E2}.Debug|x86.Build.0 = Debug|Win32
+		{A914D944-6FD7-4E46-95FF-01D00EA3B0E2}.Release|x64.ActiveCfg = Release|x64
+		{A914D944-6FD7-4E46-95FF-01D00EA3B0E2}.Release|x64.Build.0 = Release|x64
+		{A914D944-6FD7-4E46-95FF-01D00EA3B0E2}.Release|x86.ActiveCfg = Release|Win32
+		{A914D944-6FD7-4E46-95FF-01D00EA3B0E2}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
