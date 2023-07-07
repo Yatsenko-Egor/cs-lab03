@@ -7,17 +7,17 @@
 using namespace std;
 
 
-Input read_input(istream& in) {
+Input read_input(istream& in, bool prompt) {
     Input data;
-
-    cerr << "Enter number count: ";
+    if (prompt)
+        cerr << "Enter number count: ";
     size_t number_count;
     in >> number_count;
-
-    cerr << "Enter numbers: ";
+    if (prompt)
+        cerr << "Enter numbers: ";
     data.numbers = input_numbers(in, number_count);
-
-    cerr << "Enter bin count: ";
+    if (prompt)
+        cerr << "Enter bin count: ";
     in >> data.bin_count;
 
     return data;
@@ -77,10 +77,11 @@ void output_numbers(const vector<double>& numbers, const size_t& count) {
 }
 
 
-void remove_duplicates(vector<double>& numbers, size_t& count) {
+void remove_duplicates(vector<double>& numbers) {
     vector<double> dublicates;
     bool is_find;
     int i = 0;
+    size_t count = numbers.size();
     while (i < count) {
         is_find = false;
         for (int j = 0; j < dublicates.size(); j++) {

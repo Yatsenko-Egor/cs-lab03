@@ -13,5 +13,5 @@ void find_minmax(const vector<double> numbers, double& min, double& max);
 vector<size_t> make_histogram(Input& data);
 vector<double> input_numbers(istream& in, size_t count);
 void output_numbers(const vector<double>& numbers, const size_t& count);
-void remove_duplicates(vector<double>& numbers, size_t& count);
-Input read_input(istream& in);
+void remove_duplicates(vector<double>& numbers);
+Input read_input(istream& in, bool prompt);
