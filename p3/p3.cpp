@@ -11,7 +11,7 @@ int main()
     size_t number_count;
     cerr << "Enter number count: ";
     cin >> number_count;
-    auto numbers = input_numbers(number_count);
+    auto numbers = input_numbers(cin, number_count);
     remove_duplicates(numbers, number_count);
     output_numbers(numbers, number_count);
     size_t bin_count;
