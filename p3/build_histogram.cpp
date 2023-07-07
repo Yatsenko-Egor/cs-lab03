@@ -6,6 +6,23 @@
 
 using namespace std;
 
+
+Input read_input(istream& in) {
+    Input data;
+
+    cerr << "Enter number count: ";
+    size_t number_count;
+    in >> number_count;
+
+    cerr << "Enter numbers: ";
+    data.numbers = input_numbers(in, number_count);
+
+    cerr << "Enter bin count: ";
+    in >> data.bin_count;
+
+    return data;
+}
+
 void find_minmax(const vector<double> numbers, double& min, double& max) {
     if (numbers.empty())
         return;
@@ -26,15 +43,24 @@ vector<size_t> make_histogram(const vector<double>& numbers, const size_t bin_co
     double min = 0, max = 0;
     find_minmax(numbers, min, max);
     double bin_size = (max - min) / bin_count;
-    for (double number : numbers) {
-        size_t bin = static_cast<size_t>((number - min) / bin_size);
-        if (bin == bin_count) {
-            bin--;
+    for (size_t i = 0; i < numbers.size(); i++) {
+        bool found = false;
+        size_t j;
+        for (j = 0; (j < bin_count - 1) && !found; j++) {
+            auto lo = min + j * bin_size;
+            auto hi = min + (j + 1) * bin_size;
+            if ((lo <= numbers[i]) && (numbers[i] < hi)) {
+                bins[j]++;
+                found = true;
+            }
         }
-        bins[bin]++;
+        if (!found) {
+            bins[bin_count - 1]++;
+        }
     }
     return bins;
 }
+
 vector<double> input_numbers(istream& in,size_t count) {
     vector<double> result(count);
     for (size_t i = 0; i < count; i++) {

@@ -8,16 +8,9 @@ using namespace std;
 
 int main()
 {
-    size_t number_count;
-    cerr << "Enter number count: ";
-    cin >> number_count;
-    auto numbers = input_numbers(cin, number_count);
-    remove_duplicates(numbers, number_count);
-    output_numbers(numbers, number_count);
-    size_t bin_count;
-    cerr << "Enter bin count: ";
-    cin >> bin_count;
-    vector<string> colors = input_colors(bin_count);
-    vector<size_t> bins = make_histogram(numbers, bin_count);
-    show_histogram_svg(bins, bin_count, colors);
+    Input data;
+    data = read_input(cin);
+    vector<string> colors = input_colors(data.bin_count);
+    vector<size_t> bins = make_histogram(data.numbers, data.bin_count);
+    show_histogram_svg(bins, data.bin_count, colors);
 }
