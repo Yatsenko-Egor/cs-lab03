@@ -2,8 +2,16 @@
 #include <vector>
 #include <string>
 #include "show_svg_histogram.h"
+#include "sstream"
 
 using namespace std;
+
+string make_info_text() {
+    stringstream buffer;
+    // TODO: получить версию системы, записать в буфер.
+    // TODO: получить имя компьютера, записать в буфер.
+    return buffer.str();
+}
 
 void svg_begin(double width, double height) {
     cout << "<?xml version='1.0' encoding='UTF-8'?>\n";
