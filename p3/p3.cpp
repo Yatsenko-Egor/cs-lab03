@@ -16,5 +16,6 @@ int main(int argc,char* argv[]) {
     }
     remove_duplicates(input.numbers);
     const auto bins = make_histogram(input);
-    show_histogram_svg(bins, input.bin_count, input.colors);
+    string info = make_info_text();
+    show_histogram_svg(bins, input.bin_count, input.colors, info);
 }

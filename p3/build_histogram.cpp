@@ -64,15 +64,19 @@ Input read_input(istream& in, bool prompt) {
 vector<string> input_colors(istream& in, size_t count) {
     vector<string> result(count);
     string color;
-    in.ignore(2);
+    bool work_with_url = false;
+    if (in.peek() == '\r')
+        in.ignore(1);
+    in.ignore(1);
     for (size_t i = 0; i < count; i++) {
         cerr << "Enter color: ";
-        getline(in, color, '\r');
-        in.ignore(1);
+        getline(in, color);
+        if (color.back() == '\r')
+            color.pop_back();
         while (color[0] != '#' && color.find(' ') != -1) {
             cerr << "Non-existent color. Enter other color: ";
-            getline(in, color, '\r');
-            in.ignore(1);
+            getline(in, color);
+            //in.ignore(1);
         }
         result[i] = color;
     }

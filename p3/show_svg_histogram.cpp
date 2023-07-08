@@ -1,7 +1,11 @@
+#pragma warning(disable : 4996)
 #include <iostream>
 #include <vector>
 #include <string>
 #include "show_svg_histogram.h"
+#include <sstream>
+#include <windows.h>
+#include <winbase.h>
 
 using namespace std;
 
@@ -12,6 +16,29 @@ void svg_begin(double width, double height) {
     cout << "height='" << height << "' ";
     cout << "viewBox='0 0 " << width << " " << height << "' ";
     cout << "xmlns='http://www.w3.org/2000/svg'>\n";
+}
+
+string make_info_text() {
+    stringstream buffer;
+    DWORD mask = 0x0000ffff;
+    DWORD mask_major = 0x00ff;
+    DWORD info = GetVersion();
+    DWORD version = info & mask;
+    DWORD version_major = version & mask_major;
+    DWORD version_minor = version >> 8;
+    DWORD platform = info >> 16;
+    DWORD build = 0;
+    if ((info & 0x80000000) == 0) {
+        build = platform;
+    }
+    buffer << "Windows v" << version_major << '.' << version_minor << " (build " << build << ')' << '\n';
+
+    char computer_name[MAX_COMPUTERNAME_LENGTH + 1];
+    unsigned long size = MAX_COMPUTERNAME_LENGTH + 1;
+    GetComputerNameA(computer_name, &size);
+    buffer << "Computer name: " << computer_name;
+
+    return buffer.str();
 }
 
 void svg_end() {
@@ -36,7 +63,7 @@ size_t find_max_count(const vector<size_t>& bins, const size_t bin_count) {
     return max_count;
 }
 
-void show_histogram_svg(const vector<size_t>& bins, const size_t& bin_count, const vector<string>& colors) {
+void show_histogram_svg(const vector<size_t>& bins, const size_t& bin_count, const vector<string>& colors, string info) {
     const auto IMAGE_WIDTH = 810;
     const auto IMAGE_HEIGHT = 600;
     const auto TEXT_LEFT = 20;
@@ -64,5 +91,9 @@ void show_histogram_svg(const vector<size_t>& bins, const size_t& bin_count, con
         svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, colors[i], colors[i]);
         top += BIN_HEIGHT;
     }
+    string version = info.substr(0, info.find('\n'));
+    string computer_name = info.substr(info.find('\n') + 1);
+    svg_text(TEXT_LEFT, top + TEXT_BASELINE, version);
+    svg_text(TEXT_LEFT, top + 2 * TEXT_BASELINE, computer_name);
     svg_end();
 }
