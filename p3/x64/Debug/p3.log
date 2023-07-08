@@ -1,1 +1,4 @@
-﻿  p3.vcxproj -> C:\Users\Professional\source\repos\p3\x64\Debug\p3.exe
+﻿  show_svg_histogram.cpp
+C:\Users\Professional\source\repos\p3\p3\show_svg_histogram.cpp(83,46): warning C4244: инициализация: преобразование "size_t" в "double", возможна потеря данных
+C:\Users\Professional\source\repos\p3\p3\show_svg_histogram.cpp(83,32): warning C4244: инициализация: преобразование "size_t" в "const double", возможна потеря данных
+  p3.vcxproj -> C:\Users\Professional\source\repos\p3\x64\Debug\p3.exe

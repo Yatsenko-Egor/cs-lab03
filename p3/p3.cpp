@@ -8,6 +8,9 @@ using namespace std;
 
 int main()
 {
+    string info = make_info_text();
+    cout << info;
+    return 0;
     size_t number_count;
     cerr << "Enter number count: ";
     cin >> number_count;

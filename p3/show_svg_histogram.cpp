@@ -1,7 +1,10 @@
+#pragma warning(disable : 4996)
 #include <iostream>
 #include <vector>
 #include <string>
 #include "show_svg_histogram.h"
+#include <sstream>
+#include <windows.h>
 
 using namespace std;
 
@@ -12,6 +15,24 @@ void svg_begin(double width, double height) {
     cout << "height='" << height << "' ";
     cout << "viewBox='0 0 " << width << " " << height << "' ";
     cout << "xmlns='http://www.w3.org/2000/svg'>\n";
+}
+
+string make_info_text() {
+    stringstream buffer;
+    DWORD mask = 0x0000ffff;
+    DWORD mask_major = 0x00ff;
+    DWORD info = GetVersion();
+    DWORD version = info & mask;
+    DWORD version_major = version & mask_major;
+    DWORD version_minor = version >> 8;
+    DWORD platform = info >> 16;
+    DWORD build = 0;
+    if ((info & 0x80000000) == 0) {
+        build = platform;
+    }
+    buffer << "Windows v" << version_major << '.' << version_minor << " (build " << build << ')';
+
+    return buffer.str();
 }
 
 void svg_end() {
