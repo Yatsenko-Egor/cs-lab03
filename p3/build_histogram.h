@@ -15,3 +15,4 @@ vector<double> input_numbers(istream& in, size_t count);
 void output_numbers(const vector<double>& numbers, const size_t& count);
 void remove_duplicates(vector<double>& numbers);
 Input read_input(istream& in, bool prompt);
+Input download(const string& address);

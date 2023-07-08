@@ -1,11 +1,33 @@
+#pragma comment(lib, "libcurl.dll.a")
 #include "build_histogram.h"
 
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <sstream>
+#include <string>
+#include <curl\curl.h>
 
 using namespace std;
 
+Input download(const string& address) {
+    stringstream buffer;
+    curl_global_init(CURL_GLOBAL_ALL);
+    CURL* curl = curl_easy_init();
+    //curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, false);
+    if (curl) {
+        CURLcode res;
+        curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
+        res = curl_easy_perform(curl);
+        if (res != 0) {
+            cout << curl_easy_strerror(res);
+            exit(1);
+        }
+    }
+    curl_easy_cleanup(curl);
+
+    return read_input(buffer, false);
+}
 
 Input read_input(istream& in, bool prompt) {
     Input data;
