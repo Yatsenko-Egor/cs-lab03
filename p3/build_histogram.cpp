@@ -7,6 +7,7 @@
 #include <sstream>
 #include <string>
 #include <curl\curl.h>
+#include <iomanip>  
 
 using namespace std;
 
@@ -23,7 +24,7 @@ Input download(const string& address) {
     CURL* curl = curl_easy_init();
     if (curl) {
         CURLcode res;
-        //curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
         curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
@@ -31,6 +32,11 @@ Input download(const string& address) {
         if (res != 0) {
             cerr << curl_easy_strerror(res);
             exit(1);
+        }
+        curl_off_t connect;
+        res = curl_easy_getinfo(curl, CURLINFO_CONNECT_TIME_T, &connect);
+        if (CURLE_OK == res) {
+            cerr << "Time: " << connect / 1000000 << " s, " << connect / 1000 << " ms, " << connect % 1000 << " mks ";
         }
     }
     curl_easy_cleanup(curl);
