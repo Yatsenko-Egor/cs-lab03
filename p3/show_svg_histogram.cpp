@@ -5,6 +5,7 @@
 #include "show_svg_histogram.h"
 #include <sstream>
 #include <windows.h>
+#include <winbase.h>
 
 using namespace std;
 
@@ -30,7 +31,12 @@ string make_info_text() {
     if ((info & 0x80000000) == 0) {
         build = platform;
     }
-    buffer << "Windows v" << version_major << '.' << version_minor << " (build " << build << ')';
+    buffer << "Windows v" << version_major << '.' << version_minor << " (build " << build << ')' << '\n';
+
+    char computer_name[MAX_COMPUTERNAME_LENGTH + 1];
+    unsigned long size = MAX_COMPUTERNAME_LENGTH + 1;
+    GetComputerNameA(computer_name, &size);
+    buffer << "Computer name: " << computer_name;
 
     return buffer.str();
 }
@@ -57,7 +63,7 @@ size_t find_max_count(const vector<size_t>& bins, const size_t bin_count) {
     return max_count;
 }
 
-void show_histogram_svg(const vector<size_t>& bins, const size_t& bin_count, const vector<string>& colors) {
+void show_histogram_svg(const vector<size_t>& bins, const size_t& bin_count, const vector<string>& colors, string info) {
     const auto IMAGE_WIDTH = 810;
     const auto IMAGE_HEIGHT = 600;
     const auto TEXT_LEFT = 20;
@@ -85,6 +91,10 @@ void show_histogram_svg(const vector<size_t>& bins, const size_t& bin_count, con
         svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, colors[i], colors[i]);
         top += BIN_HEIGHT;
     }
+    string version = info.substr(0, info.find('\n'));
+    string computer_name = info.substr(info.find('\n') + 1);
+    svg_text(TEXT_LEFT, top + TEXT_BASELINE, version);
+    svg_text(TEXT_LEFT, top + 2 * TEXT_BASELINE, computer_name);
     svg_end();
 }
 

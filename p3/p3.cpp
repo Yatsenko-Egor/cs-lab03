@@ -9,8 +9,6 @@ using namespace std;
 int main()
 {
     string info = make_info_text();
-    cout << info;
-    return 0;
     size_t number_count;
     cerr << "Enter number count: ";
     cin >> number_count;
@@ -22,5 +20,5 @@ int main()
     cin >> bin_count;
     vector<string> colors = input_colors(bin_count);
     vector<size_t> bins = make_histogram(numbers, bin_count);
-    show_histogram_svg(bins, bin_count, colors);
+    show_histogram_svg(bins, bin_count, colors, info);
 }
