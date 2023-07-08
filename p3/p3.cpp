@@ -15,7 +15,6 @@ int main(int argc,char* argv[]) {
         input = read_input(cin, true);
     }
     remove_duplicates(input.numbers);
-    vector<string> colors = input_colors(input.bin_count);
     const auto bins = make_histogram(input);
-    show_histogram_svg(bins, input.bin_count, colors);
+    show_histogram_svg(bins, input.bin_count, input.colors);
 }

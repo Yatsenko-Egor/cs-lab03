@@ -10,17 +10,26 @@
 
 using namespace std;
 
+size_t write_data(void* items, size_t item_size, size_t item_count, void* ctx) {
+    stringstream* buffer = reinterpret_cast<stringstream*>(ctx);
+    size_t data_size = item_size * item_count;
+    buffer->write(reinterpret_cast<char*>(items), data_size);
+    return data_size;
+}
+
 Input download(const string& address) {
     stringstream buffer;
     curl_global_init(CURL_GLOBAL_ALL);
     CURL* curl = curl_easy_init();
-    //curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, false);
     if (curl) {
         CURLcode res;
+        //curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
         curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
         res = curl_easy_perform(curl);
         if (res != 0) {
-            cout << curl_easy_strerror(res);
+            cerr << curl_easy_strerror(res);
             exit(1);
         }
     }
@@ -42,7 +51,26 @@ Input read_input(istream& in, bool prompt) {
         cerr << "Enter bin count: ";
     in >> data.bin_count;
 
+    data.colors = input_colors(in, data.bin_count);
     return data;
+}
+
+vector<string> input_colors(istream& in, size_t count) {
+    vector<string> result(count);
+    string color;
+    in.ignore(2);
+    for (size_t i = 0; i < count; i++) {
+        cerr << "Enter color: ";
+        getline(in, color, '\r');
+        in.ignore(1);
+        while (color[0] != '#' && color.find(' ') != -1) {
+            cerr << "Non-existent color. Enter other color: ";
+            getline(in, color, '\r');
+            in.ignore(1);
+        }
+        result[i] = color;
+    }
+    return result;
 }
 
 void find_minmax(const vector<double> numbers, double& min, double& max) {

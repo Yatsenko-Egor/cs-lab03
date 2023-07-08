@@ -66,19 +66,3 @@ void show_histogram_svg(const vector<size_t>& bins, const size_t& bin_count, con
     }
     svg_end();
 }
-
-vector<string> input_colors(size_t count) {
-    vector<string> result(count);
-    string color;
-    cin.ignore();
-    for (size_t i = 0; i < count; i++) {
-        cerr << "Enter color: ";
-        getline(cin, color);
-        while (color[0] != '#' && color.find(' ') != -1) {
-            cerr << "Non-existent color. Enter other color: ";
-            getline(cin, color);
-        }
-        result[i] = color;
-    }
-    return result;
-}
